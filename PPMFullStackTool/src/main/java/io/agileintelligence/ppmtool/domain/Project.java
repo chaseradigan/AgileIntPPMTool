@@ -2,6 +2,7 @@ package io.agileintelligence.ppmtool.domain;
 
 import java.util.Date;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Project {
 		
 	}
 	@PrePersist
-	protected void onCreated() {
+	protected void onCreate() {
 		this.created_At = new Date();
 	}
 	
