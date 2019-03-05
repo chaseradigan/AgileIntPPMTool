@@ -5,17 +5,20 @@ import Header from "./components/Layout/Header";
 import "bootstrap/dist/css/bootstrap-grid.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProject from "./components/Project/AddProject";
+import { Provider } from "react-redux";
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Header />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/addProject" component={AddProject} />
-        </div>
-      </Router>
+      <Provider>
+        <Router>
+          <div className="App">
+            <Header />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/addProject" component={AddProject} />
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
