@@ -1,5 +1,6 @@
 package io.agileintelligence.ppmtool.domain;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,71 +16,66 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
-
 @Entity
 public class Backlog {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Integer PTSequence = 0;
-	private String projectIdentifier;
-	
-	//OneToOne with project
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id", nullable = false)
-	@JsonIgnore
-	private Project project;
-	
-	//OneToMany project tasks
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
-	private List<ProjectTask> projectTask = new ArrayList<>();
-	
-	
-	public Backlog() {
-		
-	}
 
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Integer PTSequence = 0;
+    private String projectIdentifier;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    //OneToOne with project
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="project_id",nullable = false)
+    @JsonIgnore
+    private Project project;
 
-	public Integer getPTSequence() {
-		return PTSequence;
-	}
+    //OneToMany projecttasks
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
+    private List<ProjectTask> projectTasks = new ArrayList<>();
 
-	public void setPTSequence(Integer pTSequence) {
-		PTSequence = pTSequence;
-	}
 
-	public String getProjectIdentifier() {
-		return projectIdentifier;
-	}
+    public Backlog() {
+    }
 
-	public void setProjectIdentifier(String projectIdentifier) {
-		this.projectIdentifier = projectIdentifier;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Project getProject() {
-		return project;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setProject(Project project) {
-		this.project = project;
-	}
+    public Integer getPTSequence() {
+        return PTSequence;
+    }
 
-	public List<ProjectTask> getProjectTask() {
-		return projectTask;
-	}
+    public void setPTSequence(Integer PTSequence) {
+        this.PTSequence = PTSequence;
+    }
 
-	public void setProjectTask(List<ProjectTask> projectTask) {
-		this.projectTask = projectTask;
-	}
-	
+    public String getProjectIdentifier() {
+        return projectIdentifier;
+    }
 
+    public void setProjectIdentifier(String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public List<ProjectTask> getProjectTasks() {
+        return projectTasks;
+    }
+
+    public void setProjectTasks(List<ProjectTask> projectTasks) {
+        this.projectTasks = projectTasks;
+    }
 }
