@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.agileintelligence.ppmtool.domain.User;
+import io.agileintelligence.ppmtool.exceptions.UsernameAlreadyExistsException;
 import io.agileintelligence.ppmtool.repositories.UserRepository;
 
 @Service
@@ -17,12 +18,17 @@ public class UserService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public User saveUser(User newUser) {
-		newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-		// USERNAME has custome exception
-		// USERNAME has to be unique
-		// PASSWORD and CONFIRMPASSWORD match
-		// dont persist or show CONFIRMPASSWORD
-		return userRepository.save(newUser);
-	}
 
+		try {
+			newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+
+			newUser.setUsername(newUser.getUsername());
+
+			return userRepository.save(newUser);
+
+		} catch (Exception e) {
+			throw new UsernameAlreadyExistsException("Username '" + newUser.getUsername() + "' already exists");
+		}
+
+	}
 }
