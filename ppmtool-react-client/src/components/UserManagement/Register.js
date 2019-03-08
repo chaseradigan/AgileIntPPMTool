@@ -1,6 +1,24 @@
 import React, { Component } from "react";
+import { createNewUser } from "../../actions/securityActoins";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import classnames from "classnames";
 
 class Register extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: "",
+      username: "",
+      fullName: "",
+      password: "",
+      confirmPassword: "",
+      errors: {}
+    };
+  }
+
+  onChange(e) {}
+
   render() {
     return (
       <div className="register">
@@ -14,17 +32,18 @@ class Register extends Component {
                   <input
                     type="text"
                     className="form-control form-control-lg"
-                    placeholder="Name"
-                    name="name"
-                    required
+                    placeholder="Full Name"
+                    name="fullName"
+                    value={this.state.fullName}
                   />
                 </div>
                 <div className="form-group">
                   <input
                     type="email"
                     className="form-control form-control-lg"
-                    placeholder="Email Address"
-                    name="email"
+                    placeholder="Email Address (Username)"
+                    name="username"
+                    value={this.state.username}
                   />
                 </div>
                 <div className="form-group">
@@ -33,6 +52,7 @@ class Register extends Component {
                     className="form-control form-control-lg"
                     placeholder="Password"
                     name="password"
+                    value={this.state.password}
                   />
                 </div>
                 <div className="form-group">
@@ -40,7 +60,8 @@ class Register extends Component {
                     type="password"
                     className="form-control form-control-lg"
                     placeholder="Confirm Password"
-                    name="password2"
+                    name="confirmPassword"
+                    value={this.state.confirmPassword}
                   />
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
