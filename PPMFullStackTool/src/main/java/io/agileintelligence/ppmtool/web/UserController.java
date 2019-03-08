@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.agileintelligence.ppmtool.domain.User;
 import io.agileintelligence.ppmtool.services.MapValidationErrorService;
 import io.agileintelligence.ppmtool.services.UserService;
+import io.agileintelligence.ppmtool.validator.UserValidator;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,9 +26,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private UserValidator userValidator;
+
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
 		// Validate passwords match
+		userValidator.validate(user, result);
 
 		ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
 		if (errorMap != null)
