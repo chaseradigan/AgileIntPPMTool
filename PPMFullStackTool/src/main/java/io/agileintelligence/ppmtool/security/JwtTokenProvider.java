@@ -8,8 +8,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.agileintelligence.ppmtool.domain.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtTokenProvider {
@@ -32,6 +37,32 @@ public class JwtTokenProvider {
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET).compact();
 	}
 	// validate
+
+	public boolean validateToken(String token) {
+		try {
+			Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token);
+			return true;
+		} catch (SignatureException e) {
+			System.out.println("Invalid JWT Signature");
+		} catch (MalformedJwtException e) {
+			System.out.println("Invalid JWT Token");
+		} catch (ExpiredJwtException e) {
+			System.out.println("Expired JWT token");
+		} catch (UnsupportedJwtException e) {
+			System.out.println("Unsupported JWT token");
+		} catch (IllegalArgumentException e) {
+			System.out.println("JWT claims string is empty");
+		}
+		return false;
+	}
+
 	// get user id from the token
+
+	public Long getUserIdFromJWT(String token) {
+		Claims claims = Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token).getBody();
+		String id = (String) claims.get("id");
+
+		return Long.parseLong(id);
+	}
 
 }
