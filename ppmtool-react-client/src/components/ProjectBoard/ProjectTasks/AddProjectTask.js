@@ -29,11 +29,14 @@ class AddProjectTask extends Component {
     }
   }
 
+  // on change
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+  //on submit
   onSubmit(e) {
     e.preventDefault();
+
     const newTask = {
       summary: this.state.summary,
       acceptanceCriteria: this.state.acceptanceCriteria,
@@ -41,12 +44,14 @@ class AddProjectTask extends Component {
       priority: this.state.priority,
       dueDate: this.state.dueDate
     };
+
     this.props.addProjectTask(
       this.state.projectIdentifier,
       newTask,
       this.props.history
     );
   }
+
   render() {
     const { id } = this.props.match.params;
     const { errors } = this.state;

@@ -32,12 +32,19 @@ class ProjectBoard extends Component {
 
     let BoardContent;
 
-    const boardAlgorithim = (errors, project_tasks) => {
+    const boardAlgorithm = (errors, project_tasks) => {
       if (project_tasks.length < 1) {
+        //PROJECT IDENTIFIER BUG
         if (errors.projectNotFound) {
           return (
             <div className="alert alert-danger text-center" role="alert">
               {errors.projectNotFound}
+            </div>
+          );
+        } else if (errors.projectIdentifier) {
+          return (
+            <div className="alert alert-danger text-center" role="alert">
+              {errors.projectIdentifier}
             </div>
           );
         } else {
@@ -52,7 +59,7 @@ class ProjectBoard extends Component {
       }
     };
 
-    BoardContent = boardAlgorithim(errors, project_tasks);
+    BoardContent = boardAlgorithm(errors, project_tasks);
 
     return (
       <div className="container">

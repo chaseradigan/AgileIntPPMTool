@@ -29,8 +29,6 @@ export default function(state = initialState, action) {
         project_tasks: state.project_tasks.filter(
           project_task => project_task.projectSequence !== action.payload
         )
-
-        // TO_DO
       };
 
     default:
