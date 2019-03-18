@@ -21,6 +21,7 @@ class ProjectItem extends Component {
             <div className="col-lg-6 col-md-4 col-8">
               <h3>{project.projectName}</h3>
               <p>{project.description}</p>
+              <h6>Due Date: {project.end_date}</h6>
             </div>
             <div className="col-md-4 d-none d-lg-block">
               <ul className="list-group">
@@ -53,7 +54,7 @@ class ProjectItem extends Component {
 }
 
 ProjectItem.propTypes = {
-  delteProject: PropTypes.func.isRequired
+  deleteProject: PropTypes.func.isRequired
 };
 
 export default connect(

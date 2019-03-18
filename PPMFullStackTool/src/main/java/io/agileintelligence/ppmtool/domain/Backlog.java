@@ -23,7 +23,6 @@ public class Backlog {
 	private Long id;
 	private Integer PTSequence = 0;
 	private String projectIdentifier;
-
 	// OneToOne with project
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id", nullable = false)

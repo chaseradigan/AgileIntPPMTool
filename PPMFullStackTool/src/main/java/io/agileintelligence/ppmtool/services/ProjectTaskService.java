@@ -57,9 +57,13 @@ public class ProjectTaskService {
 		return projectTaskRepository.save(projectTask);
 	}
 
-	public Iterable<ProjectTask> findBacklogById(String id, String username) {
-
+	public Iterable<ProjectTask> findBacklogById(String id, Integer sort, String username) {
+		System.out.println("sort: " + sort);
 		projectService.findProjectByIdentifier(id, username);
+		if (sort == 2)
+			return projectTaskRepository.findByProjectIdentifierOrderByDueDate(id);
+		if (sort == 3)
+			return projectTaskRepository.findByProjectIdentifierOrderByProjectSequence(id);
 
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
 	}

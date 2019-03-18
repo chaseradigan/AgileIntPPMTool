@@ -27,9 +27,13 @@ export const addProjectTask = (
   }
 };
 
-export const getBacklog = backlog_id => async dispatch => {
+export const getBacklog = (backlog_id, sort) => async dispatch => {
   try {
-    const res = await axios.get(`/api/backlog/${backlog_id}`);
+    const res = await axios.get(`/api/backlog/${backlog_id}`, {
+      params: {
+        sort: sort
+      }
+    });
     dispatch({
       type: GET_BACKLOG,
       payload: res.data
@@ -77,6 +81,16 @@ export const updateProjectTask = (
       payload: err.response.data
     });
   }
+};
+
+export const updateProjectTaskStatus = (
+  backlog_id,
+  pt_id,
+  newstatus
+) => async dispatch => {
+  const res = await axios.get(`/api/backlog/${backlog_id}/${pt_id}`);
+  res.data.status = newstatus;
+  await axios.patch(`/api/backlog/${backlog_id}/${pt_id}`, res.data);
 };
 
 export const deleteProjectTask = (backlog_id, pt_id) => async dispatch => {

@@ -19,6 +19,9 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 public class Project {
 
@@ -42,6 +45,9 @@ public class Project {
 	private Date created_At;
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date updated_At;
+	@Getter
+	@Setter
+	private String sort;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
 	@JsonIgnore
@@ -54,7 +60,7 @@ public class Project {
 	private String projectLeader;
 
 	public Project() {
-
+		sort = "0";
 	}
 
 	public User getUser() {

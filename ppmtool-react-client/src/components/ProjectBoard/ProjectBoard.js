@@ -10,13 +10,24 @@ class ProjectBoard extends Component {
   constructor() {
     super();
     this.state = {
-      errors: {}
+      errors: {},
+      sort: 0
     };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
-
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onSubmit(e) {
+    console.log("sort", this.state.sort);
+    e.preventDefault();
+    const { id } = this.props.match.params;
+    this.props.getBacklog(id, this.state.sort);
+  }
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.getBacklog(id);
+    this.props.getBacklog(id, this.state.sort);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +40,6 @@ class ProjectBoard extends Component {
     const { id } = this.props.match.params;
     const { project_tasks } = this.props.backlog;
     const { errors } = this.state;
-
     let BoardContent;
 
     const boardAlgorithm = (errors, project_tasks) => {
@@ -66,6 +76,21 @@ class ProjectBoard extends Component {
         <Link to={`/addProjectTask/${id}`} className="btn btn-primary mb-3">
           <i className="fas fa-plus-circle"> Create Project Task</i>
         </Link>
+
+        <form onSubmit={this.onSubmit}>
+          <select
+            className="custom-dropdown"
+            name="sort"
+            value={this.state.sort}
+            onChange={this.onChange}
+          >
+            <option value={"0"}>Sort By</option>
+            <option value={"1"}>Priority</option>
+            <option value={"2"}>Due Date</option>
+            <option value={"3"}>ProjectSequence</option>
+          </select>
+          <input type="submit" className="btn btn-primary btn-sm" />
+        </form>
         <br />
         <hr />
         {BoardContent}

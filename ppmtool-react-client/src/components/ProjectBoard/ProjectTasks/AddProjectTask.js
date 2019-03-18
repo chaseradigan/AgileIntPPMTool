@@ -9,7 +9,6 @@ class AddProjectTask extends Component {
   constructor(props) {
     super(props);
     const { id } = this.props.match.params;
-
     this.state = {
       summary: "",
       acceptanceCriteria: "",
